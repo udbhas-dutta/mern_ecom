@@ -18,6 +18,7 @@ exports.registerUser = catchAsyncErrors(async (req, res, next) => {
     sendToken(user, 201, res)
 })
 
+//login
 exports.loginUser = catchAsyncErrors(async (req, res, next) => {
     const { email, password } = req.body;
 
@@ -41,4 +42,18 @@ exports.loginUser = catchAsyncErrors(async (req, res, next) => {
 
     //if email and passwords match, deliver a jwt token:
     sendToken(user, 200, res)
+});
+
+//logout
+exports.logoutUser = catchAsyncErrors(async (req, res, next) => {
+
+    res.cookie("token", null, {
+        expires: new Date(Date.now()),
+        httpOnly: true,
+    });
+
+    res.status(200).json({
+        success: true,
+        message: "Logged out successfully"
+    });
 });
