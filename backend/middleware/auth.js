@@ -15,7 +15,7 @@ exports.isAuthenticatedUser = catchAsyncErrors(async(req,res,next)=>{
     req.user = await User.findById(decodedData.id);
 
     next();
-});
+}); 
 
 exports.authorizeRoles = (...roles) =>{
     return (req,res,next)=>{
