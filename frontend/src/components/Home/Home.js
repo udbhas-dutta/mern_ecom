@@ -1,9 +1,9 @@
 import React, { useEffect } from 'react'
 import { CgMouse } from "react-icons/cg";
 import './Home.css'
-import Product from './Product.js'
+import Product from './ProductCard.js'
 import MetaData from '../layout/MetaData.js';
-import { getProduct } from '../../actions/productAction.js';
+import { clearErrors, getProduct } from '../../actions/productAction.js';
 import { useSelector, useDispatch } from 'react-redux';
 import Loader from '../layout/Loader/Loader.js';
 import { toast } from 'react-toastify'
@@ -16,6 +16,7 @@ const Home = () => {
     useEffect(() => {
         if (error) {
             toast.error(error)
+            dispatch(clearErrors())
         } else {
             dispatch(getProduct())
         };
