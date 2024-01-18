@@ -8,6 +8,8 @@ import ReactStars from 'react-rating-stars-component'
 import ReviewCard from './ReviewCard.js'
 import Loader from '../layout/Loader/Loader.js'
 import { toast } from 'react-toastify'
+import MetaData from '../layout/MetaData.js'
+
 
 
 
@@ -45,6 +47,7 @@ const ProductDetails = () => {
         <>
             {loading ? <Loader /> : (
                 <>
+                    <MetaData title={`${product.name} -- mern_ecom`} />
                     <div className="ProductDetails">
                         <div>
                             <Carousel>
