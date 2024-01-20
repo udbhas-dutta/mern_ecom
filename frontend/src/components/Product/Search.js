@@ -1,5 +1,5 @@
-import React,{useState} from 'react'
-import {useNavigate} from 'react-router-dom'
+import React, { useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 import './Search.css'
 import MetaData from '../layout/MetaData'
 
@@ -8,9 +8,9 @@ const Search = () => {
     const navigate = useNavigate()
     const [keyword, setKeyword] = useState("");
 
-    const searchSubmitHandler = (e)=>{
+    const searchSubmitHandler = (e) => {
         e.preventDefault();
-        if(keyword.trim()){
+        if (keyword.trim()) {
             navigate(`/products/${keyword}`);
         } else {
             navigate("/products")
