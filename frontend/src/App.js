@@ -1,3 +1,4 @@
+// App.js
 import { useEffect } from 'react';
 import './App.css';
 import Header from './components/layout/Header/Header.js'
@@ -14,7 +15,8 @@ import store from './store.js'
 import { loadUser } from './actions/userAction.js';
 import UserOptions from './components/layout/Header/UserOptions.js'
 import { useSelector } from 'react-redux';
-
+import ProtectedRoute from './components/Route/ProtectedRoute.js';
+import UpdateProfile from './components/User/UpdateProfile.js';
 function App() {
 
   const { isAuthenticated, user } = useSelector(state => state.user)
@@ -34,15 +36,15 @@ function App() {
         <Header />
         {isAuthenticated && <UserOptions user={user} />}
         <Routes>
-          <Route exact path='/' element={<Home />}></Route>
-          <Route exact path='/product/:id' element={<ProductDetails />}></Route>
-          <Route exact path='/products' element={<Products />}></Route>
-          <Route exact path='/products' element={<Products />}></Route>
-          <Route path='/products/:keyword' element={<Products />}></Route>
-          <Route exact path='/search' element={<Search />}></Route>
-          <Route exact path='/login' element={<LoginSignUp />}></Route>
-          <Route exact path='/account' element={<Profile />}></Route>
-        </Routes>
+          <Route exact path='/' element={<Home />} />
+          <Route exact path='/product/:id' element={<ProductDetails />} />
+          <Route exact path='/products' element={<Products />} />
+          <Route path='/products/:keyword' element={<Products />} />
+          <Route exact path='/search' element={<Search />} />
+          <Route exact path='/login' element={<LoginSignUp />} />
+          <Route path="/account" element={<ProtectedRoute element={Profile} />} />        
+          <Route path="/me/update" element={<ProtectedRoute element={UpdateProfile} />} />        
+          </Routes>
         <Footer />
       </Router>
     </>
