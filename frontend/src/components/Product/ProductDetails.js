@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import Carousel from "react-material-ui-carousel"
 import "./ProductDetails.css"
 import { useSelector, useDispatch } from 'react-redux'
@@ -9,8 +9,7 @@ import ReviewCard from './ReviewCard.js'
 import Loader from '../layout/Loader/Loader.js'
 import { toast } from 'react-toastify'
 import MetaData from '../layout/MetaData.js'
-
-
+import {addItemsToCart} from '../../actions/cartAction.js'
 
 
 const ProductDetails = () => {
@@ -27,6 +26,22 @@ const ProductDetails = () => {
         value: product.ratings,
         isHalf: true
     };
+
+    const [quantity, setQuantity] = useState(1);
+
+    const increaseQuantity = () => {
+        if (product.Stock <= quantity) return;
+        setQuantity(quantity + 1);
+    }
+    const decreaseQuantity = () => {
+        if (quantity <= 1) return;
+        setQuantity(quantity - 1);
+    }
+
+    const addToCartHandler=()=>{
+        dispatch(addItemsToCart(id, quantity))
+        toast.success("Item Added to Cart");
+    }
 
     useEffect(() => {
         if (error) {
@@ -79,11 +94,11 @@ const ProductDetails = () => {
                                 <h1>{`₹${product.price}`}</h1>
                                 <div className="detailsBlock-3-1">
                                     <div className="detailsBlock-3-1-1">
-                                        <button>-</button>
-                                        <input value="1" type="number" />
-                                        <button>+</button>
+                                        <button onClick={decreaseQuantity}>-</button>
+                                        <input readOnly value={quantity} type="number" />
+                                        <button onClick={increaseQuantity}>+</button>
                                     </div>
-                                    <button>Add to Cart</button>
+                                    <button onClick={addToCartHandler}>Add to Cart</button>
                                 </div>
 
                                 <p>

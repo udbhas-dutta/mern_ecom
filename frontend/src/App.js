@@ -20,6 +20,7 @@ import UpdateProfile from './components/User/UpdateProfile.js';
 import UpdatePassword from './components/User/UpdatePassword.js';
 import ForgotPassword from './components/User/ForgotPasssword.js';
 import ResetPassword from './components/User/ResetPassword.js';
+import Cart from './components/Cart/Cart.js';
 
 function App() {
 
@@ -46,6 +47,7 @@ function App() {
           <Route path='/products/:keyword' element={<Products />} />
           <Route exact path='/search' element={<Search />} />
           <Route exact path='/login' element={<LoginSignUp />} />
+          <Route exact path='/cart' element={<Cart />} />
           <Route path="/account" element={<ProtectedRoute element={Profile} />} />        
           <Route path="/me/update" element={<ProtectedRoute element={UpdateProfile} />} />        
           <Route path="/password/update" element={<ProtectedRoute element={UpdatePassword} />} />        
