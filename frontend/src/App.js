@@ -1,5 +1,5 @@
 // App.js
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import './App.css';
 import Header from './components/layout/Header/Header.js'
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom'
@@ -21,10 +21,19 @@ import UpdatePassword from './components/User/UpdatePassword.js';
 import ForgotPassword from './components/User/ForgotPasssword.js';
 import ResetPassword from './components/User/ResetPassword.js';
 import Cart from './components/Cart/Cart.js';
-
+import Shipping from './components/Cart/Shipping.js';
+import ConfirmOrder from './components/Cart/ConfirmOrder.js';
+import Payment from './components/Cart/Payment.js';
+import axios from 'axios';
 function App() {
 
   const { isAuthenticated, user } = useSelector(state => state.user)
+
+  const [stripeApiKey, setStripeApiKey] = useState("")
+
+  async function getStripeApiKey() {
+    const {data} = await axios.get('/api/v1/stripeapikey');
+  }
 
   useEffect(() => {
     WebFont.load({
@@ -33,6 +42,8 @@ function App() {
       },
     });
     store.dispatch(loadUser())
+
+    getStripeApiKey()
   }, [])
 
   return (
@@ -48,14 +59,20 @@ function App() {
           <Route exact path='/search' element={<Search />} />
           <Route exact path='/login' element={<LoginSignUp />} />
           <Route exact path='/cart' element={<Cart />} />
-          <Route path="/account" element={<ProtectedRoute element={Profile} />} />        
-          <Route path="/me/update" element={<ProtectedRoute element={UpdateProfile} />} />        
-          <Route path="/password/update" element={<ProtectedRoute element={UpdatePassword} />} />        
-   
+          <Route path="/account" element={<ProtectedRoute element={Profile} />} />
+          <Route path="/me/update" element={<ProtectedRoute element={UpdateProfile} />} />
+          <Route path="/password/update" element={<ProtectedRoute element={UpdatePassword} />} />
+
           <Route exact path='/password/forgot' element={<ForgotPassword />} />
 
           <Route exact path='/password/reset/:token' element={<ResetPassword />} />
-          </Routes>
+
+          <Route path='/shipping' element={<ProtectedRoute element={Shipping} />} />
+
+          <Route path='/order/confirm' element={<ProtectedRoute element={ConfirmOrder} />} />
+
+          <Route path='/process/payment' element={<ProtectedRoute element={Payment} />} />
+        </Routes>
         <Footer />
       </Router>
     </>

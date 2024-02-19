@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react'
 import "./LoginSignUp.css"
 import Loader from '../layout/Loader/Loader'
-import { Link } from 'react-router-dom'
+import { Link, useLocation } from 'react-router-dom'
 import MailOutlineIcon from '@mui/icons-material/MailOutline';
 import LockOpenIcon from '@mui/icons-material/LockOpen';
 import FaceIcon from '@mui/icons-material/Face';
@@ -71,15 +71,18 @@ const LoginSignUp = () => {
         }
     }
 
+    const location = useLocation()
+    const redirectTo = location.search ? location.search.split("=")[1] : '/account'
+
     useEffect(() => {
         if (error) {
             toast.error(error)
             dispatch(clearErrors())
         }
-        if(isAuthenticated){
-            navigate('/account')
+        if (isAuthenticated) {
+            navigate(redirectTo)
         }
-    }, [dispatch, error, navigate, isAuthenticated])
+    }, [dispatch, error, navigate, isAuthenticated, redirectTo])
 
 
     const switchTabs = (e, tab) => {
