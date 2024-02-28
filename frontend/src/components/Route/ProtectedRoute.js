@@ -8,10 +8,14 @@ const ProtectedRoute = ({ path, element: Component, ...rest }) => {
     const navigate = useNavigate();
 
     useEffect(() => {
-        if (!loading && !isAuthenticated) {
+
+        const storedAuthStatus = localStorage.getItem('isAuthenticated');
+        const initialAuthStatus = storedAuthStatus === 'true'
+
+        if (initialAuthStatus === false) {
             navigate('/login');
         }
-    }, [loading, isAuthenticated, navigate]);
+    }, [loading, navigate]);
 
     return isAuthenticated ? <Component {...rest} /> : null;
 };

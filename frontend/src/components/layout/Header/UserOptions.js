@@ -10,7 +10,6 @@ import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify'
 import { logout } from '../../../actions/userAction';
 import { useDispatch, useSelector } from 'react-redux';
-import { CgWindows } from 'react-icons/cg';
 
 
 const UserOptions = ({ user }) => {
@@ -53,6 +52,7 @@ const UserOptions = ({ user }) => {
 
   function logOutUser() {
     dispatch(logout());
+    localStorage.removeItem('isAuthenticated')
     toast.success("Logged out Successfully")
   }
 

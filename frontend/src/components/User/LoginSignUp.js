@@ -80,6 +80,7 @@ const LoginSignUp = () => {
             dispatch(clearErrors())
         }
         if (isAuthenticated) {
+            localStorage.setItem('isAuthenticated', 'true')
             navigate(redirectTo)
         }
     }, [dispatch, error, navigate, isAuthenticated, redirectTo])

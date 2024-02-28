@@ -28,6 +28,8 @@ import axios from 'axios';
 import { Elements } from '@stripe/react-stripe-js';
 import { loadStripe } from '@stripe/stripe-js';
 import OrderSuccess from './components/Cart/OrderSuccess.js';
+import MyOrders from './components/Order/MyOrders.js';
+import OrderDetails from './components/Order/OrderDetails.js';
 
 
 
@@ -77,8 +79,6 @@ function App() {
 
           <Route path='/shipping' element={<ProtectedRoute element={Shipping} />} />
 
-          <Route path='/order/confirm' element={<ProtectedRoute element={ConfirmOrder} />} />
-
           {stripeApiKey && (
             <Route path='/process/payment' element={
               <Elements stripe={loadStripe(stripeApiKey)}>
@@ -90,7 +90,17 @@ function App() {
 
           <Route path='/success' element={<ProtectedRoute element={OrderSuccess} />} />
 
+          <Route path='/orders' element={<ProtectedRoute element={MyOrders} />} />
+
         </Routes>
+        
+          <Routes>
+            <Route path='/order/:id' element={<ProtectedRoute element={OrderDetails} />} />
+
+            <Route path='/order/confirm' element={<ProtectedRoute element={ConfirmOrder} />} />
+          </Routes>
+
+
         <Footer />
       </Router>
     </>

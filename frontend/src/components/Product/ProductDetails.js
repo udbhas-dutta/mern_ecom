@@ -9,7 +9,7 @@ import ReviewCard from './ReviewCard.js'
 import Loader from '../layout/Loader/Loader.js'
 import { toast } from 'react-toastify'
 import MetaData from '../layout/MetaData.js'
-import {addItemsToCart} from '../../actions/cartAction.js'
+import { addItemsToCart } from '../../actions/cartAction.js'
 
 
 const ProductDetails = () => {
@@ -38,7 +38,7 @@ const ProductDetails = () => {
         setQuantity(quantity - 1);
     }
 
-    const addToCartHandler=()=>{
+    const addToCartHandler = () => {
         dispatch(addItemsToCart(id, quantity))
         toast.success("Item Added to Cart");
     }
@@ -55,7 +55,7 @@ const ProductDetails = () => {
 
     // Check if product is not available yet
     if (loading || !product) {
-        return <p>Loading...</p>; // You can replace this with a loading indicator
+        return <p>Loading...</p>; //  replace this with a loading indicator
     }
 
     return (
@@ -98,7 +98,7 @@ const ProductDetails = () => {
                                         <input readOnly value={quantity} type="number" />
                                         <button onClick={increaseQuantity}>+</button>
                                     </div>
-                                    <button onClick={addToCartHandler}>Add to Cart</button>
+                                    <button disabled={product.Stock < 1 ? true : false} onClick={addToCartHandler}>Add to Cart</button>
                                 </div>
 
                                 <p>
