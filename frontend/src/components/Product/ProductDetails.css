@@ -48,9 +48,9 @@
     padding: 1vmax 0;
 }
 
-.detailsBlock-2>span {
-    color: rgba(54, 54, 54, 0, 582);
-    font: 200 0.6vmax cursive;
+.detailsBlock-2-span {
+    font: 200 0.8vmax cursive;
+    color: rgba(0, 0, 0, 0.404);
 }
 
 .detailsBlock-3 {
@@ -83,7 +83,7 @@
     color: rgba(0, 0, 0, 0.74);
 }
 
-detailsBlock-3-1-1>input {
+.detailsBlock-3-1-1>input {
     border: none;
     padding: 0.5vmax;
     width: 1vmax;
@@ -142,6 +142,19 @@ detailsBlock-3-1-1>input {
     transform: scale(1.1);
 }
 
+.submitDialog {
+    display: flex;
+    flex-direction: column;
+}
+
+.submitDialogTextArea {
+    border: 1px solid rgba(0, 0, 0, 0.082);
+    margin: 1vmax 0;
+    outline: none;
+    padding: 1rem;
+    font: 300 1rem "Roboto";
+}
+
 .reviewsHeading {
     color: #000000be;
     font: 500 1.4vmax "Roboto";
@@ -169,23 +182,23 @@ detailsBlock-3-1-1>input {
     width: 5vmax;
 }
 
-.reviewCard>p{
+.reviewCard>p {
     color: rgba(0, 0, 0, 0.836);
     font: 600 0.9vmax "Roboto";
 }
 
-.reviewCard>span{
+.reviewCardComment {
     color: rgba(0, 0, 0, 0.445);
     font: 300 0.8vmax cursive;
 }
 
-.noReviews{
+.noReviews {
     font: 400 1.3vmax "Gill Sans";
     text-align: center;
     color: rgba(0, 0, 0, 0.548);
 }
 
-.reviews{
+.reviews {
     display: flex;
     overflow: auto;
 }
