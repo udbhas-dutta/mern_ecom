@@ -35,7 +35,7 @@ const UserOptions = ({ user }) => {
   const navigate = useNavigate();
 
   function dashboard() {
-    navigate('/dashboard')
+    navigate('/admin/dashboard')
   }
 
   function orders() {
@@ -54,6 +54,7 @@ const UserOptions = ({ user }) => {
     dispatch(logout());
     localStorage.removeItem('isAuthenticated')
     toast.success("Logged out Successfully")
+    navigate('/')
   }
 
 
