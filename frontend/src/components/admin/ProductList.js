@@ -5,20 +5,53 @@ import { useDispatch, useSelector } from 'react-redux'
 import {
     clearErrors,
     getAdminProducts,
+    deleteProduct,
 } from "../../actions/productAction"
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { toast } from 'react-toastify'
 import { Button } from '@mui/material'
 import Sidebar from './Sidebar'
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
 import MetaData from '../layout/MetaData'
+import { DELETE_PRODUCT_RESET } from '../../constants/productConstants'
+
 
 const ProductList = () => {
 
     const dispatch = useDispatch();
 
+    const navigate = useNavigate()
+
     const { error, products } = useSelector((state) => state.products)
+
+    const { error: deleteError, isDeleted } = useSelector((state) => state.products)
+
+    const deleteProductHandler = (id) => {
+
+        dispatch(deleteProduct(id))
+    }
+
+
+    useEffect(() => {
+        if (error) {
+            toast.error(error)
+            dispatch(clearErrors())
+        }
+
+        if (deleteError) {
+            toast.error(deleteError)
+            dispatch(clearErrors())
+        }
+
+        if (isDeleted) {
+            toast.success("Deleted Product Successfully")
+            dispatch({ type: DELETE_PRODUCT_RESET })
+            navigate('/admin/dashboard')
+        }
+        dispatch(getAdminProducts())
+    }, [dispatch, error, deleteError, isDeleted, navigate])
+
 
     const columns = [
         { field: "id", headerName: "Product ID", minWidth: 200, flex: 0.5 },
@@ -54,11 +87,11 @@ const ProductList = () => {
             renderCell: (params) => {
                 return (
                     <>
-                        <Link to={`/admin/products/${params.id}`}>
+                        <Link to={`/admin/product/${params.id}`}>
                             <EditIcon />
                         </Link>
 
-                        <Button>
+                        <Button onClick={() => deleteProductHandler(params.id, "id")}>
                             <DeleteIcon />
                         </Button>
                     </>
@@ -79,16 +112,6 @@ const ProductList = () => {
             })
         })
 
-    console.log(products)
-    console.log(rows)
-
-    useEffect(() => {
-        if (error) {
-            toast.error(error)
-            dispatch(clearErrors())
-        }
-        dispatch(getAdminProducts())
-    }, [dispatch, error])
 
 
     return (
