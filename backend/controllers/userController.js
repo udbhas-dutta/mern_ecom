@@ -240,10 +240,11 @@ exports.updateUserRole = catchAsyncErrors(async (req, res, next) => {
 
     const newUserData = {
         name: req.body.name,
+        email: req.body.email,
         role: req.body.role,
     }
 
-    const user = await User.findByIdAndUpdate(req.params.id, newUserData, {
+    await User.findByIdAndUpdate(req.params.id, newUserData, {
         new: true,
         runValidators: true,
         userFindAndModify: false
@@ -257,13 +258,15 @@ exports.updateUserRole = catchAsyncErrors(async (req, res, next) => {
 //Delete User -- Admin
 exports.deleteUser = catchAsyncErrors(async (req, res, next) => {
 
-    //TODO : remove cloudinary
-
     const user = await User.findById(req.params.id)
 
     if (!user) {
         return next(new ErrorHandler(`User does not exist with id: ${req.params.id}`))
     }
+
+    const imageId = user.avatar.public_id;
+
+    await cloudinary.v2.uploader.destroy(imageId)
 
     await user.deleteOne();
 

@@ -35,6 +35,10 @@ import ProductList from './components/admin/ProductList.js'
 import NewProduct from './components/admin/NewProduct.js';
 import UpdateProduct from './components/admin/UpdateProduct.js';
 import OrderList from './components/admin/OrderList.js';
+import ProcessOrder from './components/admin/ProcessOrder.js';
+import UsersList from './components/admin/UsersList.js';
+import UpdateUser from './components/admin/UpdateUser.js';
+import ProductReviews from './components/admin/ProductReviews.js';
 
 
 
@@ -113,6 +117,14 @@ function App() {
           <Route path='/admin/product/:productId' element={<ProtectedRoute isAdmin={true} element={UpdateProduct} />} />
 
           <Route path='/admin/orders' element={<ProtectedRoute isAdmin={true} element={OrderList} />} />
+
+          <Route path='/admin/order/:id' element={<ProtectedRoute isAdmin={true} element={ProcessOrder} />} />
+
+          <Route path='/admin/users' element={<ProtectedRoute isAdmin={true} element={UsersList} />} />
+
+          <Route path='/admin/user/:userId' element={<ProtectedRoute isAdmin={true} element={UpdateUser} />} />
+
+          <Route path='/admin/reviews' element={<ProtectedRoute isAdmin={true} element={ProductReviews} />} />
         </Routes>
         <Footer />
       </Router>
