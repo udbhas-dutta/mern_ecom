@@ -211,7 +211,7 @@ export const deleteReview = (productId, reviewId) => async (dispatch) => {
 
         dispatch({
             type: DELETE_REVIEW_SUCCESS,
-            payload: data.reviews,
+            payload: data.success,
         })
     } catch (error) {
         dispatch({

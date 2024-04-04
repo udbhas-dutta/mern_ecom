@@ -45,12 +45,12 @@ const Sidebar = () => {
                     Orders
                 </p>
             </Link>
-            <Link to="./admin/users">
+            <Link to="/admin/users">
                 <p>
                     <PeopleIcon /> Users
                 </p>
             </Link>
-            <Link to="./admin/reviews">
+            <Link to="/admin/reviews">
                 <p>
                     <RateReviewIcon /> Reviews
                 </p>

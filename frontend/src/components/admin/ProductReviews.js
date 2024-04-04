@@ -29,16 +29,22 @@ const ProductReviews = () => {
 
   const [productId, setProductId] = useState("")
 
-  const deleteProductHandler = (id) => {
-
-    // dispatch(deleteProduct(id))
+  const deleteReviewHandler = (reviewId) => {
+    dispatch(deleteReview(reviewId, productId))
   }
 
-  const productReviewSubmitHandler = () => {
+  const productReviewSubmitHandler = (e) => {
+    e.preventDefault();
 
+    dispatch(getAllReviews(productId))
   }
 
   useEffect(() => {
+
+    if (productId.length === 24) {
+      dispatch(getAllReviews(productId))
+    }
+
     if (error) {
       toast.error(error)
       dispatch(clearErrors())
@@ -54,15 +60,14 @@ const ProductReviews = () => {
       dispatch({ type: DELETE_REVIEW_RESET })
       navigate('/admin/reviews')
     }
-    dispatch(getAllReviews(productId))
-  }, [dispatch, error, deleteError, isDeleted, navigate])
+  }, [dispatch, error, deleteError, isDeleted, navigate, productId])
 
   const columns = [
     { field: "id", headerName: "Review ID", minWidth: 200, flex: 0.5 },
 
     {
-      field: "name",
-      headerName: "Name",
+      field: "user",
+      headerName: "User",
       minWidth: 150,
       flex: 0.3,
     },
@@ -92,7 +97,7 @@ const ProductReviews = () => {
       renderCell: (params) => {
         return (
           <>
-            <Button onClick={() => deleteProductHandler(params.id, "id")}>
+            <Button onClick={() => deleteReviewHandler(params.id, "id")}>
               <DeleteIcon />
             </Button>
           </>
@@ -106,9 +111,10 @@ const ProductReviews = () => {
   reviews &&
     reviews.forEach((item) => {
       rows.push({
+        id: item._id,
         rating: item.rating,
         comment: item.comment,
-        name: item.user,
+        name: item.name,
       })
     })
 
@@ -117,18 +123,18 @@ const ProductReviews = () => {
       <MetaData title={`All Reviews - Admin`} />
       <div className="dashboard">
         <Sidebar />
-        <div className="productListContainer">
+        <div className="productReviewsContainer">
           <form
-            className="createProductForm"
+            className="productReviewsForm"
             onSubmit={productReviewSubmitHandler}
           >
-            <h1>All Reviews</h1>
+            <h1 className='productReviewsFormHeading'>All Reviews</h1>
 
             <div>
               <Star />
               <input
                 type="text"
-                placeholder='Name'
+                placeholder='Product ID'
                 required
                 value={productId}
                 onChange={(e) => setProductId(e.target.value)} />
@@ -139,17 +145,18 @@ const ProductReviews = () => {
               type='submit'
               disabled={updateLoading ? true : false || productId === "" ? true : false}
             >
-              Update
+              Search
             </Button>
           </form>
 
-          {reviews && reviews.length > 0 ? <DataGrid
+          {reviews && reviews.length > 0 ? (<DataGrid
             rows={rows}
             columns={columns}
             pageSize={10}
             disableSelectionOnClick
             className='productListTable'
-          /> : <h1 className="productReviewsFormHeading">No Reviews Found</h1>
+            autoHeight
+          />) : (<h1 className="productReviewsFormHeading">No Reviews Found</h1>)
           }
         </div>
       </div>
